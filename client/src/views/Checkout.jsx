@@ -16,8 +16,10 @@ const Checkout = props => {
     const [showDetails, setShowDetails] = useState(false)
     const [step, setStep] = useState(0)
 
+    // instantiate useNavigate
     const navigate = useNavigate()
 
+    // handler functions:
     const handleCloseDetails = () => setShowDetails(false)
 
     const handleShowDetails = () => setShowDetails(true)
@@ -29,15 +31,20 @@ const Checkout = props => {
     const handleNew = () => navigate("/shop")
 
     return (
+
         <div className={styles.shop} >
             <Container className="d-flex flex-row justify-content-between my-3" style={{ width: "inherit", padding: "0px" }}>
-            <div className="bg-light rounded text-secondary d-flex flex-column text-start my-2 p-3" style={{ width: "auto" }}>
-            <h2 className="text-center my-2" >Your Order:</h2>
+                <div className="bg-light rounded text-secondary d-flex flex-column text-start my-2 p-3" style={{ width: "auto" }}>
+                <h2 className="text-center my-2" >Your Order:</h2>
+
+                {/* handle displaying active orders to user, as well as plurality of the word "pizza" */}
                 {(orderDetails.length === 1) ?
                     <p className="fs-6 text-dark text-center my-3">You have <strong className="text-danger">{orderDetails.length} pizza </strong> in your cart.</p>
                     :
                     <p className="fs-6 text-dark text-center my-3">You have <strong className="text-danger">{orderDetails.length} pizzas </strong> in your cart.</p>
                 }
+
+                {/* order details modal */}
                 <Button variant="outline-danger" onClick={handleShowDetails} className="m-3 text-wrap">
                     Click to view order details
                 </Button>
@@ -106,27 +113,9 @@ const Checkout = props => {
                     </Button>
                 </Modal.Footer>
                 </Modal>
-                {/* <div className="d-flex flex-row">
-                    <p className="me-2 fw-bold">Crust:</p>
-                    <p>{ order.crust }</p>
-                </div>
-                <div className="d-flex flex-row">
-                    <p className="me-2 fw-bold">Sauce:</p>
-                    <p>{ order.sauce }</p>
-                </div>
-                <div className="d-flex flex-row">
-                    <p className="me-2 fw-bold">Cheese:</p>
-                    <p>{ order.toppings.cheese }</p>
-                </div>
-                <div className="d-flex flex-row">
-                    <p className="me-2 fw-bold">Meat:</p>
-                    <p>{ order.toppings.meat }</p>
-                </div>
-                <div className="d-flex flex-row">
-                    <p className="me-2 fw-bold">Other Toppings:</p>
-                    <p>{ order.toppings.other }</p>
-                </div> */}
             </div>
+
+            {/* returns user to pizza modal */}
             <div className="bg-light rounded text-center text-danger fw-bold d-flex flex-column text-start mt-5 px-3 py-4 ms-3" style={{ width: "auto", height: "fit-content" }}>
                 <p> . . . or</p>
                 <Button className="p-2" variant="outline-danger" onClick={handleNew}>

@@ -5,13 +5,15 @@ import Button from 'react-bootstrap/Button'
 
 const Shop = props => {
 
-    // props passed from parent (App.js) will be passed to children
-    const {order, setOrder, shoppingCart, setShoppingCart, addToShoppingCart, getSessionOrDefault, getLocalOrDefault} = props
+    // props passed from parent (App.js) and will be passed to children of this view component
+    const {order, setOrder, shoppingCart, setShoppingCart, addToShoppingCart } = props
 
     return (
         <div className={styles.shop}>
             <Container className="d-flex flex-row justify-content-between my-3" style={{ width: "inherit", padding: "0px" }}>
-                <PizzaModal order={order} setOrder={setOrder} shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} addToShoppingCart={addToShoppingCart} getSessionOrDefault={getSessionOrDefault} getLocalOrDefault={getLocalOrDefault}/>
+
+                <PizzaModal order={order} setOrder={setOrder} shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} addToShoppingCart={addToShoppingCart} />
+                
                 <Container className="d-flex flex-column flex-1" style={{ width: "40%", margin: "0px", padding: "0px" }} >
                     <div className="bg-light rounded p-2">
                         <p className="fs-4">Future Content to come...</p>

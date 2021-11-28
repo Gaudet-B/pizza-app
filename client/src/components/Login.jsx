@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+
+// simple form component, functionality handled by react-bootstrap
 const Login = () => {
     return (
         <Form>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Modal from 'react-bootstrap/Modal'
@@ -12,43 +12,65 @@ import axios from 'axios'
 
 const RegisterModal = () => {
 
+    // state hook for modal
     const [show, setShow] = useState(false)
+
+    // state hook to expand/collapse address inputs
     const [open, setOpen] = useState(false)
 
-    // const [firstName, setFirstName] = useState("")
-    // const [lastName, setLastName] = useState("")
-    // const [email, setEmail] = useState("")
-    // const [password, setPassword] = useState("")
-    // const [confirmPassword, setConfirmPassword] = useState("")
-
+    // state hooks for form inputs 
     const [formState, setFormState] = useState({})
+    // address is handled separately since it is not required to register an account
     const [addressState, setAddressState] = useState({})
 
+    // state hook for form validation
+    const [validState, setValidState] = useState({})
+
+    // instantiate useNavigate
+    const navigate = useNavigate()
+
+    // handlers for modal
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const navigate = useNavigate()
-
+    // sets state as user input changes
     const handleFormChange = e => {
         setFormState({
             ...formState,
             [e.target.name]: e.target.value
         })
     }
-
+    // separate handler for address input
     const handleAddressChange = e => {
         setAddressState({
             ...addressState,
             [e.target.name]: e.target.value
         })
+        // adds 'address' object to formState
+        setFormState({
+            ...formState,
+            address: addressState
+        })
     }
 
-    const handleSubmit = () => {
-        axios.post("http://localhost:8000/api/user/register", {formState, addressState})
+    // handles form submission to database
+    const handleSubmit = e => {
+        e.preventDefault()
+        axios.post("http://localhost:8000/api/user/register", formState)
+            // redirect to 'shop' view if successful
             .then(res => {
                 navigate("/shop")
             })
-            .catch(err => console.log(err))
+            // if not, parse through error data and create an object to be passed to the validState hook
+            .catch(err => {
+                const {errors} = err.response.data
+                let errObj = {}
+                for (const [key, value] of Object.entries(errors)) {
+                    errObj[key] = value.message
+                }
+                // sets the validState hook - errors will be displayed to user
+                setValidState(errObj)
+            })
     }
 
     return (
@@ -64,24 +86,40 @@ const RegisterModal = () => {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
+                            {/* required group */}
                             <Form.Group className="px-4">
+
                                 <Form.Label htmlFor="firstName">First Name:</Form.Label>
                                 <Form.Control name="firstName" type="text" onChange={handleFormChange} />
+                                {(validState.firstName) ? <p className="text-danger"> { validState.firstName } </p> : null }
+
                                 <Form.Label htmlFor="lastName">Last Name:</Form.Label>
                                 <Form.Control name="lastName" type="text" onChange={handleFormChange} />
+                                {(validState.lastName) ? <p className="text-danger"> { validState.lastName } </p> : null }
+
                                 <Form.Label htmlFor="email">Email Address:</Form.Label>
                                 <Form.Control name="email" type="email" onChange={handleFormChange} />
+                                {(validState.email) ? <p className="text-danger"> { validState.email } </p> : null }
+
                                 <Form.Label htmlFor="password">Password:</Form.Label>
                                 <Form.Control name="password" type="password" onChange={handleFormChange} />
+                                {(validState.password) ? <p className="text-danger"> { validState.password } </p> : null }
+
                                 <Form.Label htmlFor="confirmPassword">Confirm Password:</Form.Label>
                                 <Form.Control name="confirmPassword" type="password" onChange={handleFormChange} />
+                                {(validState.confirmPassword) ? <p className="text-danger"> { validState.confirmPassword } </p> : null }
+
                             </Form.Group>
+
                             <h5 className="my-3">Optional:</h5>
                             <div className="bg-secondary border rounded p-1 mx-1 text-light" >
                                 <p className="m-1 text">Add Address</p>
+
+                                {/* collapse component for optional form entry */}
                                 <Collapse in={open}>
                                     <div id="collapse-form">
                                         <div className="px-3 mt-3">
+                                            {/* optional group */}
                                             <Form.Group>
                                                 <Form.Label htmlFor="street">Street:</Form.Label>
                                                 <Form.Control name="street" type="text" onChange={handleAddressChange} />
@@ -104,6 +142,7 @@ const RegisterModal = () => {
                                     size="sm"
                                     style={{ height: "fit-content", minWidth: "fit-content", width: "100px" }}
                                 >
+                                    {/* handle arrow image change */}
                                     {
                                     (!open) ? 
                                     <img
@@ -127,6 +166,7 @@ const RegisterModal = () => {
                         </Form>
                     </Modal.Body>
                 </Container>
+
                 <Modal.Footer className="pe-5">
                     <Button variant="outline-secondary" onClick={handleClose}>
                         Cancel

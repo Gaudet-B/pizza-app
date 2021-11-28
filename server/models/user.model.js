@@ -1,22 +1,33 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
+
 
 const UserSchema = mongoose.Schema({
+
     firstName: {
         type: String,
-        required: [true, ""]
+        required: [true, "First Name is required"]
     },
+
     lastName: {
         type: String,
-        required: [true, ""]
+        required: [true, "Last Name is required"]
     },
+
     email: {
         type: String,
-        required: [true, ""]
+        required: [true, "email Address is required"],
+        validate: {
+            validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
+            message: "Please enter a valid email"
+        }
     },
+
     password: {
         type: String,
-        required: [true, ""]
+        required: [true, "password is required"]
     },
+
     address: {
         street: {
             type: String,
@@ -29,16 +40,39 @@ const UserSchema = mongoose.Schema({
         state: {
             type: String,
             required: [false],
-            min: [2, ""],
-            max: [2, ""]
+            minLength: [2, "please enter a valid, two-digit state abbreviation"],
+            maxLength: [2, "please enter a valid, two-digit state abbreviation"]
         },
         zip: {
-            type: Number,
+            type: String,
             required: [false],
-            min: [5, ""],
-            max: [5, ""]
+            minLength: [5, "please enter a valid, five-digit zip code"],
+            maxLength: [5, "please enter a valid, five-digit zip code"]
         }
     }
+
 }, { timestamps: true })
+
+// virtual schema attribute for password confirmation when registering
+UserSchema.virutal("confirmPassword")
+    .get(() => this._confirmPassword)
+    .set(value => this._confirmPassword = value)
+
+// before validation, check that passwords match
+UserSchema.pre("validate", function(next) {
+    if (this.password !== this.confirmPassword) {
+        this.invalidate("confirmPassword", "passwords must match")
+    }
+    next()
+})
+
+// before saving a new password, hash it 
+UserSchema.pre("save", function(next) {
+    bcrypt.hash(this.password, 10)
+        .then(hash => {
+            this.password = hash
+            next()
+        })
+})
 
 module.exports.User = mongoose.model("User", UserSchema)
