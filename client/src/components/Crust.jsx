@@ -14,36 +14,54 @@ const Crust = props => {
     // props set globally at App.js level
     const {order, setOrder} = props
 
-    const [currentCrust, setCurrentCrust] = useState({name: "NY Style", image: nyStyle})
+    const [currentCrust, setCurrentCrust] = useState({name: "NY Style", image: nyStyle, price: 10.99})
 
     // crusts hard-coded here for demo version of the application
     const [allCrusts, setAllCrusts] = useState([
         {
             name: "NY Style",
-            image: nyStyleThumb
+            image: nyStyleThumb,
+            price: 10.99
         },
         {
             name: "Deep Dish",
-            image: deepDishThumb
+            image: deepDishThumb,
+            price: 11.99
         },
         {
             name: "Sicilian",
-            image: sicilianThumb
+            image: sicilianThumb,
+            price: 11.99
         }
     ])
 
     // handles change as user input selects/changes preferred crust, as well as handles the color change to display the change to user
     const changeHandler = e => {
 
-        // allows user to click on the overall container to change input - see line 68 for exception handling
+        // allows user to click on the overall container to change input - see line 69 for exception handling
         if (e.target.id === "NY Style" || e.target.id === "Deep Dish" || e.target.id === "Sicilian") {
+            //
+            let newCrust = {}
+            for (let i = 0; i < allCrusts.length; i++) {
+                if (allCrusts[i].name === e.target.id) {
+                    newCrust = allCrusts[i]
+                }
+            }
+            console.log(newCrust)
             // sets the selected crust
-            setCurrentCrust(e.target.id)
+            setCurrentCrust(newCrust)
+            console.log(currentCrust)
+            //
+            console.log(order.price)
+            // let newTotal = order.price + newCrust.price
+            // console.log(newTotal)
             // adds selected crust to the current order
             setOrder({
                 ...order,
-                crust: e.target.id
+                crust: newCrust,
+                // price: newTotal
             })
+            console.log(order.price)
             // stores the post-change order to session
             sessionStorage.setItem("order", JSON.stringify(order))
             // handles UI color changes
@@ -108,18 +126,21 @@ const Crust = props => {
                 {(allCrusts) ?
                     allCrusts.map((crust, idx) => {
                         return(
-                            <div key={idx} id={crust.name} onClick={changeHandler} className="d-flex flex-column text-center p-2 rounded" style={{ maxWidth: "33.33%", cursor: "pointer" }}>
+                            <div key={idx} id={crust.name} onClick={changeHandler} className="d-flex flex-column text-center p-2 rounded" style={{ width: "33.33%", cursor: "pointer" }}>
                                 <img
                                     id="childImg"
                                     src={crust.image}
                                     alt={`${crust.name} image`}
                                     href="/"
-                                    height="120px"
+                                    height="110px"
                                     width="inherit"
                                     margin="auto"
                                     className="rounded"
                                 />
-                                <p id="ignore" className="" >{crust.name}</p>
+                                <div id="ignore" className="" >
+                                    <p className="my-2 fs-5">{crust.name}</p>
+                                    <p>${crust.price}</p>
+                                </div>
                             </div>
                         )
                     })

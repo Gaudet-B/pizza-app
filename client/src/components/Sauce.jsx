@@ -21,15 +21,18 @@ const Sauce = props => {
     const [allSauces, setAllSauces] = useState([
         {
             name: "Pizza Sauce",
-            image: pizzaSauceThumb
+            image: pizzaSauceThumb,
+            price: 1.99
         },
         {
             name: "Marinara Sauce",
-            image: marinaraSauceThumb
+            image: marinaraSauceThumb,
+            price: 2.49
         },
         {
             name: "White Sauce",
-            image: whiteSauceThumb
+            image: whiteSauceThumb,
+            price: 2.99
         }
     ])
 
@@ -38,12 +41,19 @@ const Sauce = props => {
 
         // allows user to click on the overall container to change input - see line 70 for exception handling
         if (e.target.id === "Pizza Sauce" || e.target.id === "Marinara Sauce" || e.target.id === "White Sauce") {
+            
+            let newSauce = {}
+            for (let i = 0; i < allSauces.length; i++) {
+                if (allSauces[i].name === e.target.id) {
+                    newSauce = allSauces[i]
+                }
+            }
             // sets the selected sauce
-            setCurrentSauce(e.target.id)
+            setCurrentSauce(newSauce)
             // adds selected sauce to the current order
             setOrder({
                 ...order,
-                sauce: e.target.id
+                sauce: newSauce
             })
             // stores the post-change order to session
             sessionStorage.setItem("order", JSON.stringify(order))
@@ -98,7 +108,7 @@ const Sauce = props => {
 
     // this handles the exception that only one sauce (marinara) will be offered if the user selects "Deep Dish" crust
 
-    if (order.crust === "Deep Dish") {
+    if (order.crust.name === "Deep Dish") {
 
         return (
             <Container className="rounded" >
@@ -132,7 +142,10 @@ const Sauce = props => {
                                         margin="auto"
                                         className="rounded"
                                     />
-                                    <p id="ignore" className="" >{sauce.name}</p>
+                                    <div id="ignore" className="" >
+                                        <p className="my-2 fs-5">{sauce.name}</p>
+                                        <p>${sauce.price}</p>
+                                    </div>
                                 </div>
                             )
                         })
@@ -170,7 +183,10 @@ const Sauce = props => {
                                         margin="auto"
                                         className="rounded"
                                     />
-                                    <p id="ignore" className="" >{sauce.name}</p>
+                                    <div id="ignore" className="" >
+                                        <p className="my-2 fs-5">{sauce.name}</p>
+                                        <p>${sauce.price}</p>
+                                    </div>
                                 </div>
                             )
                         })

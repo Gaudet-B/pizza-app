@@ -23,6 +23,64 @@ const PizzaModal = props => {
     // instantiate useNavigate
     const navigate = useNavigate()
 
+    //
+    const sumCost = () => {
+        let sum = 0
+        if (order.hasOwnProperty("crust")) {
+            sum += order.crust.price
+            console.log(sum)
+        }
+        if (order.hasOwnProperty("sauce")) {
+            sum += order.sauce.price
+            console.log(sum)
+        }
+        if (order.hasOwnProperty("toppings")) {
+            let totalToppings = sumToppings()
+            sum += totalToppings
+            console.log(sum)
+        }
+        return sum
+    }
+
+    //
+    const sumToppings = () => {
+        let sum = 0
+        // if (order.toppings.hasOwnProperty("cheese")) {
+        //     let idx = 0
+        //     while (idx <= order.toppings.cheese.length) {
+        //         sum += order.toppings.cheese[idx].price
+        //         idx++
+        //     }
+        // }
+        if (order.toppings.hasOwnProperty("meat")) {
+            let idx = 0
+            while (idx <= order.toppings.meat.length) {
+                // sum += order.toppings.meat[idx].price
+                sum++
+                idx++
+            }
+        }
+        if (order.toppings.hasOwnProperty("other")) {
+            if (order.toppings.other.length > 3) {
+                let idx = 0
+                while (idx <= order.toppings.other.length) {
+                    sum++
+                    idx++
+                }
+            }
+        }
+        return sum
+    }
+
+    const checkReqs = () => {
+        let req = true
+        if (step === 1) {
+            if (!order.crust) {
+                req = false
+            }
+        }
+    }
+
     // handlers for modal...
     // close
     const handleClose = () => {
@@ -32,14 +90,22 @@ const PizzaModal = props => {
     // show
     const handleShow = () => setShow(true)
     // next
-    const handleNext = () => setStep(step + 1)
+    const handleNext = () => {
+        let newTotal = sumCost()
+        checkReqs()
+        setOrder({
+            ...order,
+            price: newTotal
+        })
+        setStep(step + 1)
+    }
     // back
     const handleBack = () => setStep(step - 1)
 
     // handle submit -> checkout view
     const handleSubmit = () => {
         addToShoppingCart()
-        navigate.replace("/checkout")
+        navigate("/checkout")
     }
     // handle add to cart and make another pizza -> modal step #1
     const handleOrder = () => {
@@ -48,16 +114,17 @@ const PizzaModal = props => {
     }
 
     return (
-        <div className="d-flex flex-column text-center align-items-center bg-light border rounded flex-1" style={{ height: "fit-content", width: "55%" }}>
+        <div className="d-flex flex-column text-center align-items-center border rounded flex-1" style={{ height: "fit-content", width: "360px", backgroundColor: "#FFFFFF" }}>
             <img className="rounded my-2"
                 src={pizzaLogo} 
                 alt="p!zza logo" 
-                height="195px"
-                width="195px"
+                height="295px"
+                width="295px"
+                className="m-4"
             />
             
             {/* button to open modal */}
-            <Button variant="danger" onClick={handleShow} className="m-3">
+            <Button variant="danger" onClick={handleShow} className="m-3 btn-lg">
                 Get Started
             </Button>
 
@@ -81,6 +148,7 @@ const PizzaModal = props => {
                             <Container >
                                 <Modal.Title>Step 1 - Choose Crust</Modal.Title>
                                 <ProgressBar variant="danger" animated now={25} className="my-2" />
+                                <p className="fs-4 mt-2">Total: <strong className="ms-2">${order.price}</strong></p>
                             </Container>
 
                         </Modal.Header>
@@ -101,6 +169,7 @@ const PizzaModal = props => {
                             <Container >
                                 <Modal.Title>Step 2 - Choose Sauce</Modal.Title>
                                 <ProgressBar variant="danger" animated now={50} className="my-2" />
+                                <p className="fs-4 mt-2">Total: <strong className="ms-2">${order.price}</strong></p>
                             </Container>
 
                         </Modal.Header>
@@ -121,6 +190,7 @@ const PizzaModal = props => {
                             <Container >
                                 <Modal.Title>Step 3 - Choose Toppings</Modal.Title>
                                 <ProgressBar variant="danger" animated now={75} className="my-2" />
+                                <p className="fs-4 mt-2">Total: <strong className="ms-2">${order.price}</strong></p>
                             </Container>
 
                         </Modal.Header>
@@ -141,6 +211,7 @@ const PizzaModal = props => {
                             <Container >
                                 <Modal.Title>Step 4 - Review Pizza</Modal.Title>
                                 <ProgressBar variant="danger" animated now={100} className="my-2" />
+                                <p className="fs-4 mt-3 mb-0">Total: <strong className="ms-2">${order.price}</strong></p>
                             </Container>
 
                         </Modal.Header>
@@ -172,6 +243,10 @@ const PizzaModal = props => {
                         </Button>
                         </div>
                         :
+                        // ********** conditionally render button based on reqs (then remove checkReqs)
+
+                        // -------------> !! <-------------
+
                         // otherwise, display ONLY the 'continue' button
                         <Button variant="outline-danger" onClick={handleNext}>
                             Continue

@@ -25,7 +25,7 @@ const Review = props => {
     // functions to retreive images based on the "order" from props
     // crust
     const getCrustImg = order => {
-        let crust = order.crust
+        let crust = order.crust.name
         if (crust === "NY Style") {
             setCrustImg(nyStyleThumb)
         } else if (crust === "Deep Dish") {
@@ -36,10 +36,9 @@ const Review = props => {
     }
     // sauce
     const getSauceImg = order => {
-        let sauce = order.sauce
+        let sauce = order.sauce.name
         if (sauce === "Pizza Sauce") {
             setSauceImg(pizzaSauceThumb)
-            // console.log(orderData.sauceImg)
         } else if (sauce === "Marinara Sauce") {
             setSauceImg(marinaraSauceThumb)
         } else {
@@ -66,7 +65,7 @@ const Review = props => {
                         className="rounded"
                         style={{ margin: "auto" }}
                     />
-                    <p>{order.crust}</p>
+                    <p>{order.crust.name}</p>
                 </div>
 
                 {/* sauce */}
@@ -81,7 +80,7 @@ const Review = props => {
                         className="rounded"
                         style={{ margin: "auto" }}
                     />
-                    <p>{order.sauce}</p>
+                    <p>{order.sauce.name}</p>
                 </div>
             </div>
 

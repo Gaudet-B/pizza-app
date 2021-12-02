@@ -64,8 +64,13 @@ const Toppings = props => {
     // other
     const otherHandler = e => {
         let other = e.target.id
+        let label = e.target.parentNode.lastChild.lastChild
+        console.log(label)
         // add to the meat array if form input is checked
         if (e.target.checked === true) {
+            // label.setAttribute("style", "transparent")
+            console.log(label.style.color)
+            label.style.color = "transparent"
             currentToppings.other.push(other)
         // if form input is not checked (or un-checked), remove from the other array
         } else {
@@ -119,7 +124,7 @@ const Toppings = props => {
                                 return(
                                     <Form.Check key={idx} type="checkbox" id={meat} className="my-1">
                                         <Form.Check.Input onChange={meatHandler} type="checkbox" name={meat} />
-                                        <Form.Check.Label className="mx-2" htmlFor={meat} >{meat}</Form.Check.Label>
+                                        <Form.Check.Label className="mx-2" htmlFor={meat} >{meat} <strong>+$1</strong></Form.Check.Label>
                                     </Form.Check>
                                 )
                             })
@@ -140,7 +145,11 @@ const Toppings = props => {
                                 return(
                                     <Form.Check key={idx} type="checkbox" id={item} className="my-1">
                                         <Form.Check.Input onChange={otherHandler} type="checkbox" name={item} />
-                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item}</Form.Check.Label>
+                                        {(order.toppings && order.toppings.other.length >= 3 && document.getElementById(item).checked === false) ?
+                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "" }}>+$1</strong></Form.Check.Label>
+                                        :
+                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "transparent" }}>+$1</strong></Form.Check.Label>
+                                        }
                                     </Form.Check>
                                 )
                             })
@@ -154,7 +163,11 @@ const Toppings = props => {
                                 return(
                                     <Form.Check key={idx} type="checkbox" id={item} className="my-1">
                                         <Form.Check.Input onChange={otherHandler} type="checkbox" name={item} />
-                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item}</Form.Check.Label>
+                                        {(order.toppings && order.toppings.other.length >= 3 && document.getElementById(item).checked === false) ?
+                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "" }}>+$1</strong></Form.Check.Label>
+                                        :
+                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "transparent" }}>+$1</strong></Form.Check.Label>
+                                        }
                                     </Form.Check>
                                 )
                             })

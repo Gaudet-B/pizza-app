@@ -3,6 +3,11 @@
     src: url(../fonts/GretoonHighlight.ttf);
 }
 
+@font-face {
+    font-family: "Roboto Bold";
+    src: url(../fonts/Roboto-Bold.ttf);
+}
+
 @keyframes float1 {
     0% {margin-top: 10px;}
     50% {margin-top: 40px;}
@@ -65,7 +70,7 @@
     min-width: inherit;
     margin: auto;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     /* padding-left: 10%; */
     /* padding-right: 10%; */
@@ -189,4 +194,10 @@
     color: #f8f9fa;
     /* transform: color(#f8f9fa); */
     /* transition: .5s ease transform; */
+}
+
+.cartHeader {
+    font-family: "Roboto Bold", sans-serif;
+    margin: 0px;
+    letter-spacing: .15em;
 }

@@ -24,8 +24,8 @@ function App() {
   }
   
   // global state props
-  const [isEmpty, setIsEmpty] = useState(false)
-  const [order, setOrder] = useState({})
+  const [isEmpty, setIsEmpty] = useState(true)
+  const [order, setOrder] = useState({ price: 0.00 })
   const [shoppingCart, setShoppingCart] = useState([])
 
   // function that will add an order to the urser's shopping cart
@@ -37,6 +37,7 @@ function App() {
     setShoppingCart(currentCart)
     sessionStorage.removeItem("order")
     localStorage.setItem("shoppingCart", JSON.stringify(currentCart))
+    setIsEmpty(false)
   }
 
   // empty array that will be filled with images to be remdered as the background
@@ -49,8 +50,8 @@ function App() {
             images.push(pieImg)
         }
         let cart = localStorage.getItem("shoppingCart")
-        if (!cart || cart.length < 1) {
-          setIsEmpty(true)
+        if (cart || cart.length > 0) {
+          setIsEmpty(false)
         }
     }, [])
 
@@ -69,7 +70,7 @@ function App() {
       <BrowserRouter>
 
         {/* navbar */}
-        <Navigation isEmpty={isEmpty} shoppingCart={getLocalOrDefault("shoppingCart", shoppingCart)} setShoppingCart={setShoppingCart}/>
+        <Navigation isEmpty={isEmpty} shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} getLocalOrDefault={getLocalOrDefault} />
 
         {/* routes (formerly 'switch') */}
         <Routes>

@@ -25,7 +25,8 @@ const UserSchema = mongoose.Schema({
 
     password: {
         type: String,
-        required: [true, "password is required"]
+        required: [true, "password is required"],
+        minLength: [8, "password must be at least 8 characters"]
     },
 
     address: {
@@ -54,7 +55,7 @@ const UserSchema = mongoose.Schema({
 }, { timestamps: true })
 
 // virtual schema attribute for password confirmation when registering
-UserSchema.virutal("confirmPassword")
+UserSchema.virtual("confirmPassword")
     .get(() => this._confirmPassword)
     .set(value => this._confirmPassword = value)
 

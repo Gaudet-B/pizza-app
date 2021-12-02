@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -5,14 +6,24 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import emptyCart from '../assets/shopping-cart-empty.png'
 import fullCart from '../assets/shopping-cart-full.png'
 import burger from '../assets/burger-menu.png'
-import pizzaLogo from '../assets/pizza-logo-temp.jpg'
+import pizzaCart from '../assets/pizza-cart-icon.png'
+import pizzaIcon from '../assets/pizza-icon.png'
 import styles from './background.module.css'
+import DropdownItem from '@restart/ui/esm/DropdownItem'
 
 
 const Navigation = props => {
 
     // shopping cart props passed down from global level
-    const { isEmpty, shoppingCart } = props
+    const { isEmpty, shoppingCart, setShoppingCart, getLocalOrDefault } = props
+
+    useEffect(() => {
+        setShoppingCart(getLocalOrDefault("shoppingCart", shoppingCart))
+    }, [])
+
+    const stopDefault = e => {
+        e.preventDefault()
+    }
 
     return (
         <Navbar className="d-flex flex-row justify-content-between p-0 border rounded" bg="light" style={{ width: "inherit", maxHeight: "62px", marginTop: "5px" }} >
@@ -20,8 +31,8 @@ const Navigation = props => {
             {/* small brand logo */}
             <Navbar.Brand href="/" className="p-0" >
                 <img 
-                    src={pizzaLogo} 
-                    alt="pizza logo"
+                    src={pizzaIcon} 
+                    alt="pizza icon"
                     width="50px"
                     height="50px"
                     style={{ margin: "6px" }}
@@ -62,19 +73,32 @@ const Navigation = props => {
                             }
                             </Dropdown.Toggle>
 
-                            <Dropdown.Menu className="text-light" bg="light" style={{ backgroundColor: "rgba(143, 3, 3)" }}>
+                            <Dropdown.Menu variant="light" >
                             {/*  */}
-                                <h3 className="text-light ms-2">Your Cart</h3>
+                                <h3 className="ms-2" style={{ color: "rgb(185, 3, 3)" }}>Your Cart</h3>
                                 {shoppingCart.map((item, idx) => {
                                     return(
-                                        <Container>
+                                        <Container key={idx}>
                                         <Dropdown.Divider />
-                                        <Dropdown.Item key={idx}>
-                                            <p className="fs-5 fw-bold text-light">Pizza #{idx + 1}</p>
-                                            <p className="text-light">{item.crust}</p>
-                                            <p className="text-light">{item.sauce}</p>
-                                            <p className="text-light">toppings... (<strong>{item.toppings.cheese.length + item.toppings.meat.length + item.toppings.other.length}</strong>)</p>
-                                        </Dropdown.Item>
+                                        <div className="d-flex flex-row">
+                                            <div className="fs-5 mb-1 fw-bold"><p className={styles.cartHeader}>Pizza #{idx + 1}</p></div>
+                                            <img
+                                                src={pizzaCart}
+                                                alt="small pizza icon"
+                                                height="35px"
+                                                width="35px"
+                                                className="ms-2"
+                                            />
+                                        </div>
+                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
+                                            <p className="mb-1">{item.crust}</p>
+                                        </DropdownItem>
+                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
+                                            <p className="mb-1">{item.sauce}</p>
+                                        </DropdownItem>
+                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
+                                            <p className="mb-1">toppings... (<strong>{item.toppings.cheese.length + item.toppings.meat.length + item.toppings.other.length}</strong>)</p>
+                                        </DropdownItem>
                                         </Container>
                                     )
                                 })}
@@ -83,13 +107,12 @@ const Navigation = props => {
 
                         {/* menu dropdown */}
                         <Dropdown align="end">
-                            <Dropdown.Toggle variant="light" style={{ padding: "0px" }}>
+                            <Dropdown.Toggle variant="light" className="me-2" style={{ padding: "0px" }}>
                                 <img 
                                 src={burger}
                                 width="35px" 
                                 height="30px" 
                                 alt="hambuger icon" 
-                                className="ms-1"
                                 />
                             </Dropdown.Toggle>
                             <Dropdown.Menu className="text-danger" bg="light">
