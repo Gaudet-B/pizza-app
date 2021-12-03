@@ -1,12 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 import Background from './components/Background'
 import Navigation from './components/Navigation'
+import Landing from './views/Landing'
 import Shop from './views/Shop'
+import Checkout from './views/Checkout'
+import Confirm from './views/Confirm'
+
 import { useEffect, useState } from 'react'
 import pieImg from './components/pizza-pie-vector.png'
 import sliceImg from './components/pizza-slice-vector.png'
-import Checkout from './views/Checkout'
-import Landing from './views/Landing'
 
 
 function App() {
@@ -50,8 +53,10 @@ function App() {
             images.push(pieImg)
         }
         let cart = localStorage.getItem("shoppingCart")
-        if (cart || cart.length > 0) {
-          setIsEmpty(false)
+        if (cart) {
+          if (cart.length > 0) {
+            setIsEmpty(false)
+          }
         }
     }, [])
 
@@ -83,7 +88,9 @@ function App() {
 
           {/* checkout view with secure payments */}
           <Route exact path="/checkout" element ={<Checkout order={order} setOrder={setOrder} shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} addToShoppingCart={addToShoppingCart} getSessionOrDefault={getSessionOrDefault} getLocalOrDefault={getLocalOrDefault}/>} />
-
+          
+          {/*  */}
+          <Route exact path="/confirm" element={<Confirm/>} />
         </Routes>
 
       </BrowserRouter>

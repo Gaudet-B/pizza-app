@@ -14,7 +14,7 @@ const CurrentSauce = props => {
 
                 {/* demo version of application has hard-coded images with conditional rendering */}
                 {
-                    (sauce === "White Sauce") ?
+                    (sauce.name === "White Sauce") ?
                     <img 
                         src={whiteSauce} 
                         alt="white sauce"
@@ -22,7 +22,7 @@ const CurrentSauce = props => {
                         width="80%"
                         className="rounded"
                     />
-                    : (sauce === "Marinara Sauce") ?
+                    : (sauce.name === "Marinara Sauce") ?
                     <img 
                         src={marinaraSauce} 
                         alt="marinara sauce"

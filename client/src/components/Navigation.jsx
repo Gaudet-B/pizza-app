@@ -1,15 +1,18 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Dropdown from 'react-bootstrap/Dropdown'
+
 import emptyCart from '../assets/shopping-cart-empty.png'
 import fullCart from '../assets/shopping-cart-full.png'
 import burger from '../assets/burger-menu.png'
 import pizzaCart from '../assets/pizza-cart-icon.png'
 import pizzaIcon from '../assets/pizza-icon.png'
+
 import styles from './background.module.css'
-import DropdownItem from '@restart/ui/esm/DropdownItem'
 
 
 const Navigation = props => {
@@ -81,7 +84,7 @@ const Navigation = props => {
                                         <Container key={idx}>
                                         <Dropdown.Divider />
                                         <div className="d-flex flex-row">
-                                            <div className="fs-5 mb-1 fw-bold"><p className={styles.cartHeader}>Pizza #{idx + 1}</p></div>
+                                            <div className="mb-1 fw-bold"><p className={styles.cartHeader}>Pizza #{idx + 1}</p></div>
                                             <img
                                                 src={pizzaCart}
                                                 alt="small pizza icon"
@@ -90,18 +93,21 @@ const Navigation = props => {
                                                 className="ms-2"
                                             />
                                         </div>
-                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
-                                            <p className="mb-1">{item.crust}</p>
-                                        </DropdownItem>
-                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
-                                            <p className="mb-1">{item.sauce}</p>
-                                        </DropdownItem>
-                                        <DropdownItem className="text-decoration-none text-dark" href="/shop">
+                                        <p className="fw-bold">${item.price}</p>
+                                        <Dropdown.Item className="p-0 text-decoration-none text-dark" href="/shop">
+                                            <p className="mb-1">{item.crust.name}</p>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className="p-0 text-decoration-none text-dark" href="/shop">
+                                            <p className="mb-1">{item.sauce.name}</p>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className="p-0 text-decoration-none text-dark" href="/shop">
                                             <p className="mb-1">toppings... (<strong>{item.toppings.cheese.length + item.toppings.meat.length + item.toppings.other.length}</strong>)</p>
-                                        </DropdownItem>
+                                        </Dropdown.Item>
                                         </Container>
                                     )
                                 })}
+                                <Dropdown.Divider />
+                                <Link className="ms-2 fw-bold link-danger text-decoration-none" to="/checkout">Checkout &gt;</Link>
                             </Dropdown.Menu>
                         </Dropdown>
 

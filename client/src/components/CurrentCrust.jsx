@@ -14,7 +14,7 @@ const CurrentCrust = props => {
 
                 {/* demo version of application has hard-coded images with conditional rendering */}
                 {
-                    (crust === "Sicilian") ?
+                    (crust.name === "Sicilian") ?
                     <img 
                         src={sicilian} 
                         alt="sicilian crust"
@@ -22,7 +22,7 @@ const CurrentCrust = props => {
                         width="80%"
                         className="rounded"
                     />
-                    : (crust === "Deep Dish") ?
+                    : (crust.name === "Deep Dish") ?
                     <img 
                         src={deepDish} 
                         alt="deep dish crust"

@@ -50,6 +50,11 @@
     100% {color: rgb(185, 119, 11, 0.897);}
 }
 
+@keyframes spin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
 .title {
     height: inherit;
     /* font-family: Flavors, sans-serif; */
@@ -200,4 +205,8 @@
     font-family: "Roboto Bold", sans-serif;
     margin: 0px;
     letter-spacing: .15em;
+}
+
+.pizzaSpin {
+    animation: spin 3s linear infinite;
 }
