@@ -38,28 +38,21 @@ const Crust = props => {
     // handles change as user input selects/changes preferred crust, as well as handles the color change to display the change to user
     const changeHandler = e => {
 
-        // allows user to click on the overall container to change input - see line 69 for exception handling
+        // allows user to click on the overall container to change input - see line 80 for exception handling
         if (e.target.id === "NY Style" || e.target.id === "Deep Dish" || e.target.id === "Sicilian") {
-            //
+            // declare variable to store crust name in, then loop over allCrusts to find match
             let newCrust = {}
             for (let i = 0; i < allCrusts.length; i++) {
                 if (allCrusts[i].name === e.target.id) {
                     newCrust = allCrusts[i]
                 }
             }
-            console.log(newCrust)
             // sets the selected crust
             setCurrentCrust(newCrust)
-            console.log(currentCrust)
-            //
-            console.log(order.price)
-            // let newTotal = order.price + newCrust.price
-            // console.log(newTotal)
             // adds selected crust to the current order
             setOrder({
                 ...order,
                 crust: newCrust,
-                // price: newTotal
             })
             console.log(order.price)
             // stores the post-change order to session
@@ -86,10 +79,16 @@ const Crust = props => {
 
         // exception handler - allows user to click on the image or the overall container
         } else {
-            setCurrentCrust(e.target.parentNode.id)
+            let newCrust = {}
+            for (let i = 0; i < allCrusts.length; i++) {
+                if (allCrusts[i].name === e.target.parentNode.id) {
+                    newCrust = allCrusts[i]
+                }
+            }
+            setCurrentCrust(newCrust)
             setOrder({
                 ...order,
-                crust: e.target.parentNode.id
+                crust: newCrust
             })
             sessionStorage.setItem("order", JSON.stringify(order))
             e.target.parentNode.style.backgroundColor = "rgba(143, 3, 3, 0.774)"
@@ -132,14 +131,14 @@ const Crust = props => {
                                     src={crust.image}
                                     alt={`${crust.name} image`}
                                     href="/"
-                                    height="110px"
+                                    height={(crust.name === "Deep Dish") ? "90px" : "110px"}
                                     width="inherit"
                                     margin="auto"
-                                    className="rounded"
+                                    className={(crust.name === "Deep Dish") ? "rounded mt-3" : "rounded"}
                                 />
                                 <div id="ignore" className="" >
-                                    <p className="my-2 fs-5">{crust.name}</p>
-                                    <p>${crust.price}</p>
+                                    {crust.name} <br/>
+                                    ${crust.price}
                                 </div>
                             </div>
                         )

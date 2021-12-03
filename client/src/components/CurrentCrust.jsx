@@ -41,10 +41,20 @@ const CurrentCrust = props => {
                 }
             </div>
 
-            {/* descriptions of each crust - NEEDS CONDITIONAL RENDERING! */}
-            <p className="mx-4 my-2 text-light">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam eligendi, at id hic ex dolorum recusandae nam distinctio eius veniam.
+            {/* descriptions of each crust */}
+            {(crust.name === "Sicilian") ?
+            <p className="mx-4 my-2 text-light fs-4">
+                This square shaped dough will rise to over an inch thick and have a crunchy base, and an airy interior.
             </p>
+            : (crust.name === "Deep Dish") ?
+            <p className="mx-4 my-2 text-light fs-4">
+                This pan-baked pizza is done in the classic Chicago style, with LOTS of toppings underneath and sauce on top.
+            </p>
+            : 
+            <p className="mx-4 my-2 text-light fs-4">
+                Hand-tossed, thin, cripsy, classic.
+            </p>
+            }
 
         </div>
     )

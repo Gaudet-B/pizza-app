@@ -42,9 +42,21 @@ const CurrentSauce = props => {
             </div>
 
             {/* descriptions of each sauce - NEEDS CONDITIONAL RENDERING! */}
+            {(sauce.name === "White Sauce") ?
             <p className="mx-4 my-2 text-light">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam eligendi, at id hic ex dolorum recusandae nam distinctio eius veniam.
+                Creamy, cheesy, garlic-y goodness. Best with salty, spicy or heavier toppings.
             </p>
+            
+            : (sauce.name === "Marinara Sauce") ?
+            <p className="mx-4 my-2 text-light">
+                Light and packed full of flavor, this sauce is painstakingly handmade and is ideal for lighter and more complex pizzas.
+            </p>
+            
+            :
+            <p className="mx-4 my-2 text-light">
+                Lightly seasoned, fresh tomatoes pureed to perfection. An excellent base for any pizza.
+            </p>
+            }
         </div>
     )
 }

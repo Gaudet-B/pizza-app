@@ -39,7 +39,7 @@ const Sauce = props => {
     // handles change as user input selects/changes preferred sauce, as well as handles the color change to display the change to user
     const changeHandler = e => {
 
-        // allows user to click on the overall container to change input - see line 70 for exception handling
+        // allows user to click on the overall container to change input - see line 80 for exception handling
         if (e.target.id === "Pizza Sauce" || e.target.id === "Marinara Sauce" || e.target.id === "White Sauce") {
             
             let newSauce = {}
@@ -79,10 +79,16 @@ const Sauce = props => {
 
         // exception handler - allows user to click on the image or the overall container
         } else {
-            setCurrentSauce(e.target.parentNode.id)
+            let newSauce = {}
+            for (let i = 0; i < allSauces.length; i++) {
+                if (allSauces[i].name === e.target.parentNode.id) {
+                    newSauce = allSauces[i]
+                }
+            }
+            setCurrentSauce(newSauce)
             setOrder({
                 ...order,
-                sauce: e.target.parentNode.id
+                sauce: newSauce
             })
             sessionStorage.setItem("order", JSON.stringify(order))
             e.target.parentNode.style.backgroundColor = "rgba(143, 3, 3, 0.774)"
@@ -143,8 +149,8 @@ const Sauce = props => {
                                         className="rounded"
                                     />
                                     <div id="ignore" className="" >
-                                        <p className="my-2 fs-5">{sauce.name}</p>
-                                        <p>${sauce.price}</p>
+                                        {sauce.name} <br/>
+                                        ${sauce.price}
                                     </div>
                                 </div>
                             )
@@ -184,8 +190,8 @@ const Sauce = props => {
                                         className="rounded"
                                     />
                                     <div id="ignore" className="" >
-                                        <p className="my-2 fs-5">{sauce.name}</p>
-                                        <p>${sauce.price}</p>
+                                        {sauce.name} <br/>
+                                        ${sauce.price}
                                     </div>
                                 </div>
                             )

@@ -54,13 +54,13 @@ const Review = props => {
             <div className="d-flex flex-row justify-content-evenly my-2">
 
                 {/* crust */}
-                <div className="d-flex flex-column text-center border border-light rounded" style={{ width: "40%" }}>
+                <div className="d-flex flex-column text-center border border-light rounded" style={{ width: "46%" }}>
                     <p className="mb-0 mt-2" >Your</p>
                     <h3 className="mt-0 mb-2 text-decoration-underline" >Crust:</h3>
                     <img 
                         src={crustImg} 
                         alt="current crust"
-                        height="100px"
+                        height={(order.crust.name === "Deep Dish") ? "80px" : "100px"}
                         width="100px"
                         className="rounded"
                         style={{ margin: "auto" }}
@@ -69,7 +69,7 @@ const Review = props => {
                 </div>
 
                 {/* sauce */}
-                <div className="d-flex flex-column text-center border border-light rounded" style={{ width: "40%" }}>
+                <div className="d-flex flex-column text-center border border-light rounded" style={{ width: "46%" }}>
                     <p className="mb-0 mt-2" >Your</p>
                     <h3 className="mt-0 mb-2 text-decoration-underline" >Sauce:</h3>
                     <img 
@@ -85,16 +85,16 @@ const Review = props => {
             </div>
 
             {/* bottom: toppings */}
-            <div className="d-flex flex-column border border-light rounded mx-2 mb-2 px-4">
+            <div className="d-flex flex-column border border-light rounded mx-2 mb-2 ps-1 pe-2">
 
                 <p className="mb-0 mt-2" >Your</p>
                 <h3 className="mt-0 mb-2 text-decoration-underline" >Toppings:</h3>
 
                 {/* cheese and meat */}
-                <div className="d-flex flex-row justify-content-between my-2 border-bottom border-light">
+                <div className="d-flex flex-row justify-content-evenly my-2 border-bottom border-light">
                     {/* cheese */}
-                    <div className="d-flex flex-row text-start" style={{ width: "40%" }}>
-                        <p className="fw-bold text-center">Cheese:</p>
+                    <div className="d-flex flex-column text-start" style={{ width: "40%" }}>
+                        <p className="fw-bold text-center mb-0">Cheese:</p>
                         <ul>
                             {(order.toppings.cheese.length > 0) ?
                                 order.toppings.cheese.map((cheese, idx) => {
@@ -112,8 +112,8 @@ const Review = props => {
                     {/* divider */}
                     <div className="ms-3 border-start border-light my-2" style={{ height: "inherit", width: "1px" }}></div>
                     {/* meat */}
-                    <div className="d-flex flex-row text-start" style={{ width: "40%" }}>
-                        <p className="fw-bold text-center">Meat:</p>
+                    <div className="d-flex flex-column text-start" style={{ width: "40%" }}>
+                        <p className="fw-bold text-center mb-0">Meat:</p>
                         <ul>
                             {(order.toppings.meat.length > 0) ?
                                 order.toppings.meat.map((meat, idx) => {
@@ -131,11 +131,11 @@ const Review = props => {
                 </div>
 
                 {/* other toppings */}
-                <div className="d-flex flex-row text-center mx-3">
-                    <p className="fw-bold">Other:</p>
-                    <ul className="d-flex flex-row justify-content-evenly" style={{ width: "80%", padding: "0px" }}>
+                <div className="d-flex flex-column text-start mx-3">
+                    <p className="fw-bold mb-0">Other:</p>
+                    <ul className="d-flex flex-row justify-content-between" style={{ width: "80%", padding: "0px" }}>
                         {/* column #1 */}
-                        <div className="d-flex flex-column text-start ms-4" >
+                        <div className="d-flex flex-column text-start ms-4 me-2" >
                             {(order.toppings.other.length > 1) ?
                                 // first half of other toppings array
                                 order.toppings.other.slice(0, Math.floor(order.toppings.other.length/2)).map((other, idx) => {
@@ -153,7 +153,7 @@ const Review = props => {
                             }
                         </div>
                         {/* column #2 */}
-                        <div className="d-flex flex-column text-start ms-4" >
+                        <div className="d-flex flex-column text-start ms-5" >
                             {(order.toppings.other.length > 1) ?
                                 // second half of other toppings array
                                 order.toppings.other.slice(Math.floor(order.toppings.other.length/2)).map((other, idx) => {

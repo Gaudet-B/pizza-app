@@ -98,70 +98,47 @@ const Toppings = props => {
 
             <Form className="d-flex flex-column">
 
-                {/* top: cheese and meat */}
-                <div className="d-flex flex-row p-2 text-light mt-2 me-2">
+                {/* cheese inputs */}
+                <Form.Group className="d-flex flex-column p-2 text-light border border-light rounded me-3 ms-1 mt-2">
+                    <h5 className="display-5">Cheese:</h5>
+                    {
+                        allCheese.map((cheese, idx) => {
+                            return(
+                                <Form.Check key={idx} type="checkbox" id={cheese} className="my-1 d-flex flex-row justify-content-between text-end" style={{ minWidth: "65%", maxWidth: "215px", margin: "auto" }}>
+                                    <Form.Check.Input onChange={cheeseHandler} type="checkbox" name={cheese} />
+                                    <Form.Check.Label className="mx-2" htmlFor={cheese} >{cheese}</Form.Check.Label>
+                                </Form.Check>
+                            )
+                        })
+                    }
+                </Form.Group>
 
-                    {/* cheese inputs */}
-                    <Form.Group className="d-flex flex-column text-start col p-2 border border-light rounded">
-                        <h5>Cheese:</h5>
-                        {
-                            allCheese.map((cheese, idx) => {
-                                return(
-                                    <Form.Check key={idx} type="checkbox" id={cheese} className="my-1">
-                                        <Form.Check.Input onChange={cheeseHandler} type="checkbox" name={cheese} />
-                                        <Form.Check.Label className="mx-2" htmlFor={cheese} >{cheese}</Form.Check.Label>
-                                    </Form.Check>
-                                )
-                            })
-                        }
-                    </Form.Group>
+                {/* meat inputs */}
+                <Form.Group className="d-flex flex-column p-2 text-light border border-light rounded me-3 ms-1 mt-2">
+                    <h5 className="display-5">Meat:</h5>
+                    {
+                        allMeat.map((meat, idx) => {
+                            return(
+                                <Form.Check key={idx} type="checkbox" id={meat} className="my-1 d-flex flex-row justify-content-between text-end" style={{ minWidth: "65%", maxWidth: "215px", margin: "auto" }}>
+                                    <Form.Check.Input onChange={meatHandler} type="checkbox" name={meat} />
+                                    <Form.Check.Label className="mx-2" htmlFor={meat} >{meat} <strong>+$1</strong></Form.Check.Label>
+                                </Form.Check>
+                            )
+                        })
+                    }
+                </Form.Group>
 
-                    {/* meat inputs */}
-                    <Form.Group className="d-flex flex-column text-start col ms-2 p-2 border border-light rounded">
-                        <h5>Meat:</h5>
-                        {
-                            allMeat.map((meat, idx) => {
-                                return(
-                                    <Form.Check key={idx} type="checkbox" id={meat} className="my-1">
-                                        <Form.Check.Input onChange={meatHandler} type="checkbox" name={meat} />
-                                        <Form.Check.Label className="mx-2" htmlFor={meat} >{meat} <strong>+$1</strong></Form.Check.Label>
-                                    </Form.Check>
-                                )
-                            })
-                        }
-                    </Form.Group>
-
-                </div>
-
-                {/* bottom: other toppings */}
+                {/* other toppings */}
                 <div className="d-flex flex-column p-2 text-light border border-light rounded me-3 ms-1 mt-2">
-                    <h5 className="text-start" >Other:</h5>
-                    <div className="d-flex flex-row">
+                    <h5 className="display-5" >Other:</h5>
 
-                    {/* first half of other inputs  */}
-                    <Form.Group className="d-flex flex-column text-start col ms-2">
+                    {/* other inputs  */}
+                    <Form.Group className="d-flex flex-column text-wrap col ms-2">
                         {
-                            allOther.slice(0, 4).map((item, idx) => {
+                            // allOther.slice(0, 4).map((item, idx) => {
+                            allOther.map((item, idx) => {
                                 return(
-                                    <Form.Check key={idx} type="checkbox" id={item} className="my-1">
-                                        <Form.Check.Input onChange={otherHandler} type="checkbox" name={item} />
-                                        {(order.toppings && order.toppings.other.length >= 3 && document.getElementById(item).checked === false) ?
-                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "" }}>+$1</strong></Form.Check.Label>
-                                        :
-                                        <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "transparent" }}>+$1</strong></Form.Check.Label>
-                                        }
-                                    </Form.Check>
-                                )
-                            })
-                        }
-                    </Form.Group>
-
-                    {/* second half of other inputs */}
-                    <Form.Group className="d-flex flex-column text-start col ms-2">
-                        {
-                            allOther.slice(4).map((item, idx) => {
-                                return(
-                                    <Form.Check key={idx} type="checkbox" id={item} className="my-1">
+                                    <Form.Check key={idx} type="checkbox" id={item} className="my-1 d-flex flex-row justify-content-between text-end" style={{ minWidth: "65%", maxWidth: "215px", margin: "auto" }}>
                                         <Form.Check.Input onChange={otherHandler} type="checkbox" name={item} />
                                         {(order.toppings && order.toppings.other.length >= 3 && document.getElementById(item).checked === false) ?
                                         <Form.Check.Label className="mx-2" htmlFor={item} >{item} <strong style={{ color: "" }}>+$1</strong></Form.Check.Label>
@@ -174,7 +151,6 @@ const Toppings = props => {
                         }
                     </Form.Group>
                     
-                    </div>
                 </div>
             </Form>
         </div>

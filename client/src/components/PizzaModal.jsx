@@ -228,17 +228,17 @@ const PizzaModal = props => {
 
                 {/* footer always contains 'back' button... */}
                 <Modal.Footer className="d-flex flex-row justify-content-between">
-                    <Button variant="outline-secondary" onClick={handleBack}>
+                    <Button variant="outline-secondary" onClick={handleBack} style={{ height: "inherit" }}>
                         Back
                     </Button>
                     {
                         // if user is on step #4, display BOTH 'add' and 'checkout' buttons
                         (step === 4) ?
                         <div className="d-flex flex-row">
-                        <Button variant="outline-danger" onClick={handleOrder} className="mx-2">
+                        <Button variant="outline-danger" onClick={handleOrder} className="mx-2" style={{ maxWidth: "150px", height: "inherit" }}>
                             Add to Cart and Make Another!
                         </Button>
-                        <Button variant="danger" onClick={handleSubmit}>
+                        <Button variant="danger" onClick={handleSubmit} style={{ maxWidth: "150px", height: "inherit" }}>
                             Checkout
                         </Button>
                         </div>

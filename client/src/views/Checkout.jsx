@@ -91,7 +91,7 @@ const Checkout = props => {
                     <Button variant="danger" onClick={handleShowDetails} className="my-3" style={{ width: "70%", margin: "auto" }}>
                         <p className="fs-6 mb-0">Click to view order details</p>
                     </Button>
-                    <Modal size="sm" show={showDetails} onHide={handleCloseDetails}>
+                    <Modal show={showDetails} onHide={handleCloseDetails}>
                     {(step < 0  || step > orderDetails.length) ?
                     handleCloseDetails()
                     :
