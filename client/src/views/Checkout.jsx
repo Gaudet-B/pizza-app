@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Modal from 'react-bootstrap/Modal'
+
 import styles from '../components/background.module.css'
 
 import pizzaCart from '../assets/pizza-cart-icon.png'
@@ -19,8 +20,8 @@ import Payment from '../components/Payment'
 
 const Checkout = props => {
 
-    // props                                 <-- ** remove unused PROPS here and from parents
-    const {order, setOrder, shoppingCart, setShoppingCart, addToShoppingCart, getSessionOrDefault, getLocalOrDefault} = props
+    // props 
+    const { shoppingCart, getLocalOrDefault} = props
 
     const [orderDetails, setOrderDetails] = useState(getLocalOrDefault("shoppingCart", shoppingCart))
     const [orderTotal, setOrderTotal] = useState(0)
